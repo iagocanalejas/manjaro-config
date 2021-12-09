@@ -15,6 +15,10 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 # Comment this line out to enable default emacs-like bindings
 bindkey -v
 
+# Keycron keybindings for HOME/END
+bindkey  "^[[H"   beginning-of-line
+bindkey  "^[[F"   end-of-line
+
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 

@@ -96,12 +96,13 @@ su root -c 'echo "options hid_apple fnmode=0" > /etc/modprobe.d/hid_apple.conf'
 # Avoid the wait bettween login attempts
 sudo echo "nodelay" >> /etc/security/faillock.conf
 
-echo "Install Gkraken"
-flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak --user install flathub com.leinardi.gkraken
-flatpak run com.leinardi.gkraken --add-udev-rule
-
 echo "-------------------------------------------------"
 echo "Following programs needs to be manually installed"
 echo "-------------------------------------------------"
 echo $(<packages/manual-install.txt)
+
+echo "-------------------------------------------------"
+echo "Following configurations need to be manually changed"
+echo "-------------------------------------------------"
+echo "nano ~/.config/autostart/ssh-add.desktop"
+echo "Exec=ssh-add -q [ssh keys]"

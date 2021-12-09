@@ -12,6 +12,9 @@ docker-compose
 exa
 gnome-keyring 
 gsmartcontrol
+kwallet
+kwallet-pam
+kwallet-manager
 libsecret
 libgnome-keyring
 mkvtoolnix-cli
