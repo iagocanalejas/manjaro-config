@@ -19,6 +19,7 @@ libsecret
 libgnome-keyring
 mkvtoolnix-cli
 mkvtoolnix-gui
+net-tools
 p7zip
 telegram-desktop
 tmux

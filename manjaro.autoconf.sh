@@ -20,6 +20,7 @@ echo "Uninstalling packages"
 echo "-------------------------------------------------"
 sudo pacman -Rsn --noconfirm - < packages/uninstall.txt
 
+
 echo "-------------------------------------------------"
 echo "Installing pacman packages"
 echo "-------------------------------------------------"
@@ -28,11 +29,11 @@ sudo pacman -Sy --noconfirm - < packages/pkglist.txt
 echo "-------------------------------------------------"
 echo "Installing YaY"
 echo "-------------------------------------------------"
-cd ~/.local/share
+cd ~/.local/share || exit
 git clone "https://aur.archlinux.org/yay.git" yay
-cd yay
+cd yay || exit
 makepkg -si --noconfirm
-cd $SCRIPT_DIR
+cd "$SCRIPT_DIR" || exit
 
 echo "-------------------------------------------------"
 echo "Installing YaY packages"
@@ -43,21 +44,21 @@ echo "-------------------------------------------------"
 echo "Installing asdf"
 echo "-------------------------------------------------"
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf
-cd ~/.asdf
-cd $SCRIPT_DIR
+cd ~/.asdf || exit
+cd "$SCRIPT_DIR" || exit
 
 echo "-------------------------------------------------"
 echo "Copy Zsh configuration"
 echo "-------------------------------------------------"
-cp $SCRIPT_DIR/config/.zshrc $HOME/.zshrc
-mkdir -p $HOME/.zsh_functions
+cp "$SCRIPT_DIR/config/.zshrc" "$HOME/.zshrc"
+mkdir -p "$HOME/.zsh_functions"
 
-chsh -s $(which zsh)
+chsh -s "$(which zsh)"
 
 echo "-------------------------------------------------"
 echo "Copy configurations"
 echo "-------------------------------------------------"
-rsync -a .config/ $HOME/.config/
+rsync -a .config/ "$HOME/.config/"
 mkdir ~/Workspace
 
 # Change swappiness
@@ -69,10 +70,10 @@ sudo systemctl enable fstrim.timer
 echo "-------------------------------------------------"
 echo "Installing asdf plugins"
 echo "-------------------------------------------------"
-$HOME/.asdf/asdf.sh plugin-add python https://github.com/danhper/asdf-python.git
-$HOME/.asdf/asdf.sh plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-$HOME/.asdf/asdf.sh install python latest
-$HOME/.asdf/asdf.sh install nodejs latest
+"$HOME/.asdf/asdf.sh" plugin-add python https://github.com/danhper/asdf-python.git
+"$HOME/.asdf/asdf.sh" plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+"$HOME/.asdf/asdf.sh" install python latest
+"$HOME/.asdf/asdf.sh" install nodejs latest
 
 echo "-------------------------------------------------"
 echo "Update pacman yet again"
@@ -94,15 +95,9 @@ sudo touch /etc/modprobe.d/hid_apple.conf
 su root -c 'echo "options hid_apple fnmode=0" > /etc/modprobe.d/hid_apple.conf'
 
 # Avoid the wait bettween login attempts
-sudo echo "nodelay" >> /etc/security/faillock.conf
+su root -c 'echo "nodelay" >> /etc/security/faillock.conf'
 
 echo "-------------------------------------------------"
 echo "Following programs needs to be manually installed"
 echo "-------------------------------------------------"
-echo $(<packages/manual-install.txt)
-
-echo "-------------------------------------------------"
-echo "Following configurations need to be manually changed"
-echo "-------------------------------------------------"
-echo "nano ~/.config/autostart/ssh-add.desktop"
-echo "Exec=ssh-add -q [ssh keys]"
+echo "$(<packages/manual-install.txt)"
