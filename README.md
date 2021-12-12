@@ -55,7 +55,7 @@
   mkdir ~/Workspace
 
   # Change swappiness
-  su root -c 'echo "vm.swappiness=10" > /etc/sysctl.d/100-manjaro.conf'
+  su root -c 'echo "vm.swappiness=10" >> /etc/sysctl.d/100-manjaro.conf'
 
   # Enable fstrim
   sudo systemctl enable fstrim.timer
@@ -64,7 +64,7 @@
   ```sh
   # Fix for keychron keyboard function keys
   sudo touch /etc/modprobe.d/hid_apple.conf
-  su root -c 'echo "options hid_apple fnmode=0" > /etc/modprobe.d/hid_apple.conf'
+  su root -c 'echo "options hid_apple fnmode=0" >> /etc/modprobe.d/hid_apple.conf'
 
   # Avoid the wait bettween login attempts
   sudo echo "nodelay" >> /etc/security/faillock.conf
@@ -82,3 +82,12 @@ ssh-add /home/canalejas/.ssh/raspi </dev/null
 nano ~/.config/autostart/ssh-add.desktop  # Add github and raspi paths in '[ssh keys]' place
 ssh-copy-id pi@[pi_ip]  # Copies raspi key to a raspberry
 ``` 
+
+### Mount disk on boot
+```sh
+sudo mkdir /media/data
+
+ls -al /dev/disk/by-uuid/ # Get UUID of the disk you want to mount
+
+su root -c 'echo "UUID=<YOUR_UUID> /media/data   ext4    defaults        0       0" >> /etc/fstab'
+```

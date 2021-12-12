@@ -62,7 +62,7 @@ rsync -a .config/ "$HOME/.config/"
 mkdir ~/Workspace
 
 # Change swappiness
-su root -c 'echo "vm.swappiness=10" > /etc/sysctl.d/100-manjaro.conf'
+su root -c 'echo "vm.swappiness=10" >> /etc/sysctl.d/100-manjaro.conf'
 
 # Enable fstrim
 sudo systemctl enable fstrim.timer
@@ -92,7 +92,7 @@ echo "Aplying some fixes"
 echo "-------------------------------------------------"
 # Fix for keychron keyboard function keys
 sudo touch /etc/modprobe.d/hid_apple.conf
-su root -c 'echo "options hid_apple fnmode=0" > /etc/modprobe.d/hid_apple.conf'
+su root -c 'echo "options hid_apple fnmode=0" >> /etc/modprobe.d/hid_apple.conf'
 
 # Avoid the wait bettween login attempts
 su root -c 'echo "nodelay" >> /etc/security/faillock.conf'
