@@ -1,0 +1,5 @@
+dbeaver
+docker
+docker-compose
+mkvtoolnix-cli
+mkvtoolnix-gui

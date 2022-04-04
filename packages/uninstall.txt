@@ -1,8 +1,8 @@
 elisa
 firefox
-k3b
 konsole
 kwalletmanager
+manjaro-zsh-config
 manjaro-application-utility
 manjaro-documentation-en
 manjaro-hello
@@ -12,6 +12,9 @@ pamac-cli
 pamac-gtk
 pamac-tray-icon-plasma
 skanlite
-steam-manjaro
-thunderbird
 yakuake
+zsh-syntax-highlighting
+zsh-autosuggestions
+zsh-completions
+zsh-history-substring-search
+zsh-theme-powerlevel10k

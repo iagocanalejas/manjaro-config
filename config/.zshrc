@@ -3,7 +3,7 @@ USE_POWERLINE="true"
 source /usr/share/zsh/manjaro-zsh-config
 
 ### EXPORT
-export TERM="xterm-256color"                      # getting proper colors
+export TERM="xterm-256color" # getting proper colors
 export HISTORY_IGNORE="(ls|cd|pwd|exit|sudo reboot|history|cd -|cd ..)"
 export EDITOR=nano
 
@@ -16,33 +16,33 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 bindkey -v
 
 # Keycron keybindings for HOME/END
-bindkey  "^[[H"   beginning-of-line
-bindkey  "^[[F"   end-of-line
+bindkey "^[[H" beginning-of-line
+bindkey "^[[F" end-of-line
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
 ### PATH
-if [ -d "$HOME/.bin" ] ;
-  then PATH="$HOME/.bin:$PATH"
+if [ -d "$HOME/.bin" ]; then
+  PATH="$HOME/.bin:$PATH"
 fi
 
-if [ -d "$HOME/.local/bin" ] ;
-  then PATH="$HOME/.local/bin:$PATH"
+if [ -d "$HOME/.local/bin" ]; then
+  PATH="$HOME/.local/bin:$PATH"
 fi
 
-if [ -d "$HOME/Applications" ] ;
-  then PATH="$HOME/Applications:$PATH"
+if [ -d "$HOME/Applications" ]; then
+  PATH="$HOME/Applications:$PATH"
 fi
 
 ### CHANGE TITLE OF TERMINALS
 case ${TERM} in
-  xterm*|rxvt*|Eterm*|aterm|kterm|gnome*|alacritty|st|konsole*)
-    PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\007"'
-        ;;
-  screen*)
-    PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\033\\"'
-    ;;
+xterm* | rxvt* | Eterm* | aterm | kterm | gnome* | alacritty | st | konsole*)
+  PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\007"'
+  ;;
+screen*)
+  PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\033\\"'
+  ;;
 esac
 
 ### Function extract for common file formats ###
@@ -50,46 +50,47 @@ SAVEIFS=$IFS
 IFS=$(echo -en "\n\b")
 
 function extract {
- if [ -z "$1" ]; then
+  if [ -z "$1" ]; then
     # display usage if no parameters given
     echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
     echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
- else
-    for n in "$@"
-    do
-      if [ -f "$n" ] ; then
-          case "${n%,}" in
-            *.cbt|*.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar)
-                         tar xvf "$n"       ;;
-            *.lzma)      unlzma ./"$n"      ;;
-            *.bz2)       bunzip2 ./"$n"     ;;
-            *.cbr|*.rar)       unrar x -ad ./"$n" ;;
-            *.gz)        gunzip ./"$n"      ;;
-            *.cbz|*.epub|*.zip)       unzip ./"$n"       ;;
-            *.z)         uncompress ./"$n"  ;;
-            *.7z|*.arj|*.cab|*.cb7|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.pkg|*.rpm|*.udf|*.wim|*.xar)
-                         7z x ./"$n"        ;;
-            *.xz)        unxz ./"$n"        ;;
-            *.exe)       cabextract ./"$n"  ;;
-            *.cpio)      cpio -id < ./"$n"  ;;
-            *.cba|*.ace)      unace x ./"$n"      ;;
-            *)
-                         echo "extract: '$n' - unknown archive method"
-                         return 1
-                         ;;
-          esac
-      else
-          echo "'$n' - file does not exist"
+  else
+    for n in "$@"; do
+      if [ -f "$n" ]; then
+        case "${n%,}" in
+        *.cbt | *.tar.bz2 | *.tar.gz | *.tar.xz | *.tbz2 | *.tgz | *.txz | *.tar)
+          tar xvf "$n"
+          ;;
+        *.lzma) unlzma ./"$n" ;;
+        *.bz2) bunzip2 ./"$n" ;;
+        *.cbr | *.rar) unrar x -ad ./"$n" ;;
+        *.gz) gunzip ./"$n" ;;
+        *.cbz | *.epub | *.zip) unzip ./"$n" ;;
+        *.z) uncompress ./"$n" ;;
+        *.7z | *.arj | *.cab | *.cb7 | *.chm | *.deb | *.dmg | *.iso | *.lzh | *.msi | *.pkg | *.rpm | *.udf | *.wim | *.xar)
+          7z x ./"$n"
+          ;;
+        *.xz) unxz ./"$n" ;;
+        *.exe) cabextract ./"$n" ;;
+        *.cpio) cpio -id <./"$n" ;;
+        *.cba | *.ace) unace x ./"$n" ;;
+        *)
+          echo "extract: '$n' - unknown archive method"
           return 1
+          ;;
+        esac
+      else
+        echo "'$n' - file does not exist"
+        return 1
       fi
     done
-fi
+  fi
 }
 
 function fix_history {
   cd ~
   mv .zsh_history .zsh_history_bad
-  strings .zsh_history_bad > .zsh_history
+  strings .zsh_history_bad >.zsh_history
   fc -R .zsh_history
   rm .zsh_history_bad
 }
@@ -102,7 +103,7 @@ IFS=$SAVEIFS
 alias doas="doas --"
 
 # navigation
-up () {
+up() {
   local d=""
   local limit="$1"
 
@@ -111,13 +112,13 @@ up () {
     limit=1
   fi
 
-  for ((i=1;i<=limit;i++)); do
+  for ((i = 1; i <= limit; i++)); do
     d="../$d"
   done
 
   # perform cd. Show error if cd fails
   if ! cd "$d"; then
-    echo "Couldn't go up $limit dirs.";
+    echo "Couldn't go up $limit dirs."
   fi
 }
 
@@ -130,11 +131,13 @@ alias l.='exa -a | egrep "^\."'
 
 # pacman and yay
 alias update='sudo pacman -Syyu && yay -Syu --noconfirm'
-alias pacsyu='sudo pacman -Syyu'                 # update only standard pkgs
-alias yaysua='yay -Sua --noconfirm'              # update only AUR pkgs (yay)
-alias yaysyu='yay -Syu --noconfirm'              # update standard pkgs and AUR pkgs (yay)
-alias unlock='sudo rm /var/lib/pacman/db.lck'    # remove pacman lock
-alias cleanup='sudo pacman -Rns (pacman -Qtdq)'  # remove orphaned packages
+alias pacsyu='sudo pacman -Syyu'                # update only standard pkgs
+alias yaysua='yay -Sua --noconfirm'             # update only AUR pkgs (yay)
+alias yaysyu='yay -Syu --noconfirm'             # update standard pkgs and AUR pkgs (yay)
+alias parsua='paru -Sua --noconfirm'            # update only AUR pkgs (paru)
+alias parsyu='paru -Syu --noconfirm'            # update standard pkgs and AUR pkgs (paru)
+alias unlock='sudo rm /var/lib/pacman/db.lck'   # remove pacman lock
+alias cleanup='sudo pacman -Rns (pacman -Qtdq)' # remove orphaned packages
 
 # get fastest mirrors
 alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
@@ -169,7 +172,8 @@ alias amend='git commit --amend'
 alias fetch='git fetch'
 alias pull='git pull origin'
 alias push='git push origin'
-alias stat='git status'  # 'status' is protected name so using 'stat' instead
+alias fpush='git push -f'
+alias stat='git status' # 'status' is protected name so using 'stat' instead
 alias tag='git tag'
 alias newtag='git tag -a'
 
@@ -186,9 +190,6 @@ alias yta-opus="youtube-dl --extract-audio --audio-format opus "
 alias yta-vorbis="youtube-dl --extract-audio --audio-format vorbis "
 alias yta-wav="youtube-dl --extract-audio --audio-format wav "
 alias ytv-best="youtube-dl -f bestvideo+bestaudio "
-
-# bare git repo alias for dotfiles
-alias config="/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME"
 
 # the terminal rickroll
 alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash'
@@ -210,11 +211,11 @@ fpath+=${ZDOTDIR:-~}/.zsh_functions
 
 ### BASH INSULTER (works in zsh though) ###
 if [ -f /etc/bash.command-not-found ]; then
-    . /etc/bash.command-not-found
+  . /etc/bash.command-not-found
 fi
 
 # Add asdf
-. $HOME/.asdf/asdf.sh
+. /opt/asdf-vm/asdf.sh
 
 ### SETTING THE STARSHIP PROMPT ###
 eval "$(starship init zsh)"

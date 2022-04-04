@@ -1,0 +1,3 @@
+asdf-vm
+jetbrains-toolbox
+rpi-imager
