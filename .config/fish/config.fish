@@ -194,6 +194,22 @@ function org-search -d "send a search string to org-mode"
     printf $output
 end
 
+# Removes asdf from path to update the system.
+function disable_asdf
+    set -e PATH[1]
+    set -e PATH[1]
+end
+
+function enable_asdf
+    source /opt/asdf-vm/asdf.fish
+end
+
+function bugupdate
+    disable_asdf
+    update
+    enable_asdf
+end
+
 ### END OF FUNCTIONS ###
 
 
