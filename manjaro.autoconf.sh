@@ -125,6 +125,11 @@ if [ "$computer" = "$PC_VALUE" ]; then
     asdf install python latest
     asdf install nodejs latest
     asdf install gradle latest
+
+    echo "-------------------------------------------------"
+    echo "Change Docker permissions"
+    echo "-------------------------------------------------"
+    sudo usermod -aG docker "$USER"
 fi
 
 if [ "$computer" = "$MI_VALUE" ]; then
