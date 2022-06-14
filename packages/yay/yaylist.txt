@@ -20,4 +20,4 @@ ttf-droid
 ttf-hack
 ttf-meslo
 ttf-roboto
-whatsapp-nativefier
+whatsapp-for-linux
