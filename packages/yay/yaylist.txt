@@ -20,4 +20,3 @@ ttf-droid
 ttf-hack
 ttf-meslo
 ttf-roboto
-whatsapp-for-linux
