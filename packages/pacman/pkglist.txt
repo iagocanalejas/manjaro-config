@@ -15,6 +15,7 @@ kwalletmanager
 libsecret
 libgnome-keyring
 lolcat
+lshw
 net-tools
 p7zip
 telegram-desktop

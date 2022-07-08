@@ -164,6 +164,9 @@ su root -c 'echo "vm.swappiness=10" >> /etc/sysctl.d/100-manjaro.conf'
 # Enable fstrim
 sudo systemctl enable fstrim.timer
 
+# Enable xbox controller
+sudo systemctl enable xboxdrv.service
+
 # Avoid the wait bettween login attempts
 su root -c 'echo "nodelay" >> /etc/security/faillock.conf'
 

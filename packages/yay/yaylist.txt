@@ -3,6 +3,7 @@ autojump
 brave-bin
 dropbox
 dxvk-bin
+franz
 google-chrome
 nerd-fonts-fira-code
 ocs-url
@@ -14,6 +15,7 @@ protonvpn-gui
 qbittorrent
 qdirstat
 shell-color-scripts
+stacer
 starship
 sublime-text-4
 ttf-droid
