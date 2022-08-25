@@ -9,6 +9,7 @@ dosfstools
 exa
 gnome-keyring
 gsmartcontrol
+iperf3
 kwallet
 kwallet-pam
 kwalletmanager
@@ -18,6 +19,7 @@ lolcat
 lshw
 net-tools
 p7zip
+peek
 telegram-desktop
 unrar
 unzip
