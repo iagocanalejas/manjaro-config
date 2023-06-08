@@ -1,8 +1,0 @@
-aegisub
-dbeaver
-docker
-docker-compose
-mkvtoolnix-cli
-mkvtoolnix-gui
-pcsx2
-youtube-dl

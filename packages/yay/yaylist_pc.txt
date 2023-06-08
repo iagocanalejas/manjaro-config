@@ -1,5 +1,0 @@
-asdf-vm
-jetbrains-toolbox
-rpi-imager
-postman-bin
-xboxdrv

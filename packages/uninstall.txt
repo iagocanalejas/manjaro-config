@@ -1,5 +1,4 @@
 elisa
-firefox
 konsole
 kwalletmanager
 manjaro-zsh-config

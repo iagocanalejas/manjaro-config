@@ -2,48 +2,12 @@
 
 SCRIPT_DIR=$(pwd)
 
-# Supported shells
-FISH_VALUE="fish"
-ZSH_VALUE="zsh"
-
-# Supported PCs
-PC_VALUE="desktop"
-MI_VALUE="notebook"
-
-while getopts s:c: flag; do
-    case "${flag}" in
-    s) shell=${OPTARG} ;;
-    c) computer=${OPTARG} ;;
-    *) exit 1 ;;
-    esac
-done
-
-# Default shell
-if [ -z "$shell" ]; then
-    shell="$FISH_VALUE"
-fi
-
-# Default computer
-if [ -z "$computer" ]; then
-    computer="$PC_VALUE"
-fi
-
-if [ "$shell" != "$FISH_VALUE" ] && [ "$shell" != "$ZSH_VALUE" ]; then
-    echo "-s valid values are [\"fish\", \"zsh\"]"
-    exit 1
-fi
-
-if [ "$computer" != "$PC_VALUE" ] && [ "$computer" != "$MI_VALUE" ]; then
-    echo "-c valid values are [\"desktop\", \"notebook\"]"
-    exit 1
-fi
-
 echo "-------------------------------------------------"
 echo "Update pacman mirrors"
 echo "-------------------------------------------------"
 sudo pacman-mirrors -g
 
-#Add parallel downloading
+# Add parallel downloading
 sudo sed -i 's/^#Para/Para/' /etc/pacman.conf
 
 echo "-------------------------------------------------"
@@ -60,12 +24,7 @@ echo "-------------------------------------------------"
 echo "Installing pacman packages"
 echo "-------------------------------------------------"
 sudo pacman -Sy --noconfirm git make gcc base-devel
-sudo pacman -Sy --noconfirm - <packages/pacman/pkglist.txt
-
-echo "-------------------------------------------------"
-echo "Installing pacman specific ${computer} packages"
-echo "-------------------------------------------------"
-sudo pacman -Sy --noconfirm - <"packages/pacman/pkglist_${computer}.txt"
+sudo pacman -Sy --noconfirm - <packages/pkglist.txt
 
 echo "-------------------------------------------------"
 echo "Installing YaY"
@@ -79,67 +38,46 @@ cd "$SCRIPT_DIR" || exit
 echo "-------------------------------------------------"
 echo "Installing YaY packages"
 echo "-------------------------------------------------"
-yay -Sy --noconfirm - <packages/yay/yaylist.txt
-
-echo "-------------------------------------------------"
-echo "Installing YaY specific ${computer} packages"
-echo "-------------------------------------------------"
-yay -Sy --noconfirm - <"packages/yay/yaylist_${computer}.txt"
+yay -Sy --noconfirm - <packages/yaylist.txt
 
 ###################
 ###### Shell ######
 ###################
-if [ "$shell" = "$ZSH_VALUE" ]; then
-    echo "-------------------------------------------------"
-    echo "Copy Zsh configuration"
-    echo "-------------------------------------------------"
-    sudo pacman -Sy --noconfirm zsh zsh-syntax-highlighting zsh-autosuggestions
+echo "-------------------------------------------------"
+echo "Copy Fish configuration"
+echo "-------------------------------------------------"
+sudo pacman -Sy --noconfirm fish
 
-    cp "$SCRIPT_DIR/config/.zshrc" "$HOME/.zshrc"
-    mkdir -p "$HOME/.zsh_functions"
-
-    chsh -s "$(which zsh)"
-fi
-
-if [ "$shell" = "$FISH_VALUE" ]; then
-    echo "-------------------------------------------------"
-    echo "Copy Fish configuration"
-    echo "-------------------------------------------------"
-    sudo pacman -Sy --noconfirm fish
-
-    chsh -s "$(which fish)"
-fi
+chsh -s "$(which fish)"
 
 echo "-------------------------------------------------"
 echo "Copy configurations"
 echo "-------------------------------------------------"
 rsync -a .config/ "$HOME/.config/"
 
-if [ "$computer" = "$PC_VALUE" ]; then
-    echo "-------------------------------------------------"
-    echo "Installing asdf plugins"
-    echo "-------------------------------------------------"
-    asdf plugin-add python https://github.com/danhper/asdf-python.git
-    asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-    asdf plugin-add gradle https://github.com/rfrancis/asdf-gradle.git
-    asdf install python latest
-    asdf install nodejs latest
-    asdf install gradle latest
+echo "-------------------------------------------------"
+echo "Installing asdf plugins"
+echo "-------------------------------------------------"
+asdf plugin-add python https://github.com/danhper/asdf-python.git
+asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+asdf install python latest
+asdf install nodejs latest
 
-    echo "-------------------------------------------------"
-    echo "Change Docker permissions"
-    echo "-------------------------------------------------"
-    sudo usermod -aG docker "$USER"
-fi
+echo "-------------------------------------------------"
+echo "Setup asdf global"
+echo "-------------------------------------------------"
+asdf global python latest
+asdf global nodejs latest
 
-if [ "$computer" = "$MI_VALUE" ]; then
-    if [ "$shell" = "$FISH_VALUE" ]; then
-        sed -i 's/^source \/opt\/asdf-vm\/asdf.fish/# source \/opt\/asdf-vm\/asdf.fish/' "$HOME/.config/fish/config.fish"
-    else
-        '\. \/opt\/asdf-vm\/asdf.sh'
-        sed -i 's/^\. \/opt\/asdf-vm\/asdf.sh/# \. \/opt\/asdf-vm\/asdf.sh/' "$HOME/.zshrc"
-    fi
-fi
+echo "-------------------------------------------------"
+echo "ASDF FIX: Update sudoers"
+echo "-------------------------------------------------"
+sudo awk '/root ALL=(ALL:ALL) ALL/ { print; print "Defaults secure_path=\"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\""; next }1' /etc/sudoers
+
+echo "-------------------------------------------------"
+echo "Change Docker permissions"
+echo "-------------------------------------------------"
+sudo usermod -aG docker "$USER"
 
 echo "-------------------------------------------------"
 echo "Update pacman yet again"
@@ -150,13 +88,12 @@ yay -Suyu --noconfirm
 echo "-------------------------------------------------"
 echo "Aplying some fixes"
 echo "-------------------------------------------------"
-if [ "$computer" = "$PC_VALUE" ]; then
-    # Fix for keychron keyboard function keys
-    sudo touch /etc/modprobe.d/hid_apple.conf
-    su root -c 'echo "options hid_apple fnmode=0" >> /etc/modprobe.d/hid_apple.conf'
+# Fix for keychron keyboard function keys
+sudo touch /etc/modprobe.d/hid_apple.conf
+su root -c 'echo "options hid_apple fnmode=0" >> /etc/modprobe.d/hid_apple.conf'
 
-    mkdir -p ~/Workspace/work
-fi
+mkdir -p ~/Workspace/work
+mkdir -p ~/Workspace/personal
 
 # Change swappiness
 su root -c 'echo "vm.swappiness=10" >> /etc/sysctl.d/100-manjaro.conf'
