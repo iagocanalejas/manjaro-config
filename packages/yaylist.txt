@@ -1,6 +1,5 @@
-autofirma-bin
-autojump
 asdf-vm
+autofirma-bin
 brave-bin
 dropbox
 dxvk-bin
@@ -10,18 +9,14 @@ jetbrains-toolbox
 nerd-fonts-fira-code
 ocs-url
 onlyoffice-bin
-plasma5-applets-eventcalendar
-postman-bin
 protonvpn
 protonvpn-cli
 protonvpn-gui
 qbittorrent
-qdirstat
 rpi-imager
 shell-color-scripts
-stacer
 starship
-sublime-text-4
+thunderbird
 ttf-droid
 ttf-hack
 ttf-meslo

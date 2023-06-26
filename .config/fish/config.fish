@@ -3,8 +3,8 @@ set -e fish_user_paths
 set -U fish_user_paths $HOME/.bin $HOME/.cargo/bin $HOME/.local/bin $HOME/Applications /var/lib/flatpak/exports/bin/ $fish_user_paths
 
 ### EXPORT ###
-set fish_greeting                                 # Supresses fish's intro message
-set TERM "xterm-256color"                         # Sets the terminal type
+set fish_greeting # Supresses fish's intro message
+set TERM xterm-256color # Sets the terminal type
 set XDG_CONFIG_HOME /home/canalejas/.config
 
 ### SET MANPAGER
@@ -108,6 +108,7 @@ alias history='history | fzf'
 
 # activate current python environment
 alias activate='source venv/bin/activate.fish'
+alias n='nvim .'
 
 # navigation
 alias ..='cd ..'
@@ -125,15 +126,15 @@ alias vim='nvim'
 
 # Changing "ls" to "exa"
 alias ls='exa -al --color=always --group-directories-first' # my preferred listing
-alias la='exa -a --color=always --group-directories-first'  # all files and dirs
-alias ll='exa -l --color=always --group-directories-first'  # long format
+alias la='exa -a --color=always --group-directories-first' # all files and dirs
+alias ll='exa -l --color=always --group-directories-first' # long format
 alias lt='exa -aT --color=always --group-directories-first' # tree listing
 alias l.='exa -a | grep -E "^\."'
 
 # pacman and yay
 alias update='sudo pacman -Syuy && yay -Syuy --noconfirm && flatpak update'
-alias unlock='sudo rm /var/lib/pacman/db.lck'    # remove pacman lock
-alias cleanup='sudo pacman -Rns (pacman -Qtdq)'  # remove orphaned packages
+alias unlock='sudo rm /var/lib/pacman/db.lck' # remove pacman lock
+alias cleanup='sudo pacman -Rns (pacman -Qtdq)' # remove orphaned packages
 
 # get fastest mirrors
 alias mirror="sudo pacman-mirrors --fasttrack"
@@ -149,8 +150,8 @@ alias mv='mv -i'
 alias rm='rm -i'
 
 # adding flags
-alias df='df -h'                          # human-readable sizes
-alias free='free -m'                      # show sizes in MB
+alias df='df -h' # human-readable sizes
+alias free='free -m' # show sizes in MB
 
 # ps
 alias psa="ps auxf"

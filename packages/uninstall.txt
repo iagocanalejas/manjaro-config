@@ -1,7 +1,8 @@
 elisa
+kcalc
 konsole
-kwalletmanager
-manjaro-zsh-config
+kwrited
+kwriteconfig5
 manjaro-application-utility
 manjaro-documentation-en
 manjaro-hello
@@ -12,8 +13,4 @@ pamac-gtk
 pamac-tray-icon-plasma
 skanlite
 yakuake
-zsh-syntax-highlighting
-zsh-autosuggestions
-zsh-completions
-zsh-history-substring-search
-zsh-theme-powerlevel10k
+zsh

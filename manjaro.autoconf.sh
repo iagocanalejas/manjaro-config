@@ -18,7 +18,7 @@ sudo pacman -Suyu --noconfirm
 echo "-------------------------------------------------"
 echo "Uninstalling packages"
 echo "-------------------------------------------------"
-sudo pacman -Rsn --noconfirm - <packages/uninstall.txt
+sudo pacman -Rscn --noconfirm - <packages/uninstall.txt
 
 echo "-------------------------------------------------"
 echo "Installing pacman packages"
@@ -89,11 +89,13 @@ echo "-------------------------------------------------"
 echo "Aplying some fixes"
 echo "-------------------------------------------------"
 # Fix for keychron keyboard function keys
-sudo touch /etc/modprobe.d/hid_apple.conf
-su root -c 'echo "options hid_apple fnmode=0" >> /etc/modprobe.d/hid_apple.conf'
+# sudo touch /etc/modprobe.d/hid_apple.conf
+# su root -c 'echo "options hid_apple fnmode=0" >> /etc/modprobe.d/hid_apple.conf'
 
-mkdir -p ~/Workspace/work
-mkdir -p ~/Workspace/personal
+# Create used folders
+mkdir -p ~/Workspace/eu
+mkdir -p ~/Workspace/self
+mkdir -p ~/Workspace/configs
 
 # Change swappiness
 su root -c 'echo "vm.swappiness=10" >> /etc/sysctl.d/100-manjaro.conf'

@@ -204,7 +204,6 @@ mouse_bindings:
   - { mouse: Middle, action: PasteSelection }
 
 key_bindings:
-  - { key: Q,         mods: Control,       action: Quit                        }
   - { key: N,         mods: Control,       action: SpawnNewInstance            }
   - { key: V,         mods: Control|Shift, action: Paste                       }
   - { key: C,         mods: Control|Shift, action: Copy                        }
