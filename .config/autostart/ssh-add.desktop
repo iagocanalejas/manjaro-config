@@ -1,4 +1,4 @@
 [Desktop Entry]
-Exec=ssh-add -q [ssh keys]
+Exec=ssh-add -q /home/canalejas/.ssh/id_rsa
 Name=ssh-add
 Type=Application

@@ -1,12 +1,21 @@
 # Configuration script for Manjaro
 
+## Clone repository
+
 ```sh
-git clone --recursive-submodules https://github.com/iagocanalejas/manjaro-config.git
+git clone --recurse-submodules https://github.com/iagocanalejas/manjaro-config.git
 ```
+
+### Run the `.sh` configuration (will also run ansible).
 
 ```sh
   ./manjaro.autoconf.sh
-  ansible-playbook manjaro.yml --ask-become-pass --ask-vault-pass
+```
+
+### Run the ansible configuration.
+
+```sh
+  ansible-playbook manjaro.yaml --ask-become-pass --ask-vault-pass
 ```
 
 # Next Steps
@@ -14,14 +23,14 @@ git clone --recursive-submodules https://github.com/iagocanalejas/manjaro-config
 ## Generate ssh keys
 
 ```sh
-ssh-keygen -t ed25519 -C "iagocanalejas@gmail.com" # Github key
-ssh-keygen -t rsa -b 2048 # RaspberryPi key
+ssh-keygen -t ed25519 -C "iagocanalejas@gmail.com"
+ssh-keygen -t rsa -b 2048
 
-ssh-add /home/canalejas/.ssh/github </dev/null
-ssh-add /home/canalejas/.ssh/raspi </dev/null
+ssh-add /home/canalejas/.ssh/id_rsa </dev/null
 
-nano ~/.config/autostart/ssh-add.desktop  # Add github and raspi paths in '[ssh keys]' place
-ssh-copy-id pi@[pi_ip]  # Copies raspi key to a raspberry
+# Add generated key paths in place
+nano ~/.config/autostart/ssh-add.desktop
+ssh-copy-id [user]@[ip]  # Copy the key
 ```
 
 ## Mount disk on boot

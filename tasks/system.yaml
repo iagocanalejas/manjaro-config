@@ -1,0 +1,39 @@
+- name: configs | update sudoers
+  become: true
+  lineinfile:
+    path: /etc/sudoers
+    regexp: "root ALL=(ALL:ALL) ALL"
+    line: 'Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"'
+    backup: yes
+
+- name: configs | add user to "docker" group
+  become: true
+  user:
+    name: "{{ lookup('env', 'USER') }}"
+    groups: docker
+    append: yes
+
+- name: configs | enable fstrim
+  become: true
+  systemd:
+    name: fstrim.timer
+    state: started
+    enabled: yes
+
+- name: configs | enable xbox controller
+  become: true
+  systemd:
+    name: xboxdrv.service
+    state: started
+    enabled: yes
+
+- name: configs | change swappiness
+  become: true
+  command: echo "vm.swappiness=10" >> /etc/sysctl.d/100-manjaro.conf
+
+- name: configs | avoid wait bettween login attempts
+  become: true
+  command: echo "nodelay" >> /etc/security/faillock.conf
+
+- name: configs | change themes
+  command: lookandfeeltool -a org.manjaro.breath-dark.desktop

@@ -9,6 +9,7 @@ sudo pacman-mirrors -g
 
 # Add parallel downloading
 sudo sed -i 's/^#Para/Para/' /etc/pacman.conf
+sudo sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
 
 echo "-------------------------------------------------"
 echo "Update pacman"
@@ -40,76 +41,25 @@ echo "Installing YaY packages"
 echo "-------------------------------------------------"
 yay -Sy --noconfirm - <packages/yaylist.txt
 
-###################
-###### Shell ######
-###################
-echo "-------------------------------------------------"
-echo "Copy Fish configuration"
-echo "-------------------------------------------------"
-sudo pacman -Sy --noconfirm fish
-
-chsh -s "$(which fish)"
-
 echo "-------------------------------------------------"
 echo "Copy configurations"
 echo "-------------------------------------------------"
 rsync -a .config/ "$HOME/.config/"
 
 echo "-------------------------------------------------"
-echo "Installing asdf plugins"
+echo "Change some directories permissions"
 echo "-------------------------------------------------"
-asdf plugin-add python https://github.com/danhper/asdf-python.git
-asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-asdf install python latest
-asdf install nodejs latest
+sudo mkdir -p /usr/local/n /usr/local/bin /usr/local/lib /usr/local/include /usr/local/share
+sudo chown -R $(whoami) /usr/local/n /usr/local/bin /usr/local/lib /usr/local/include /usr/local/share
+sudo chmod -R 777 /usr/local/share
 
 echo "-------------------------------------------------"
-echo "Setup asdf global"
+echo "Running ansible playbook"
 echo "-------------------------------------------------"
-asdf global python latest
-asdf global nodejs latest
-
-echo "-------------------------------------------------"
-echo "ASDF FIX: Update sudoers"
-echo "-------------------------------------------------"
-sudo awk '/root ALL=(ALL:ALL) ALL/ { print; print "Defaults secure_path=\"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\""; next }1' /etc/sudoers
-
-echo "-------------------------------------------------"
-echo "Change Docker permissions"
-echo "-------------------------------------------------"
-sudo usermod -aG docker "$USER"
+ansible-playbook manjaro.yaml --ask-become-pass --ask-vault-pass
 
 echo "-------------------------------------------------"
 echo "Update pacman yet again"
 echo "-------------------------------------------------"
 sudo pacman -Suyu --noconfirm
 yay -Suyu --noconfirm
-
-echo "-------------------------------------------------"
-echo "Aplying some fixes"
-echo "-------------------------------------------------"
-# Fix for keychron keyboard function keys
-# sudo touch /etc/modprobe.d/hid_apple.conf
-# su root -c 'echo "options hid_apple fnmode=0" >> /etc/modprobe.d/hid_apple.conf'
-
-# Create used folders
-mkdir -p ~/Workspace/eu
-mkdir -p ~/Workspace/self
-mkdir -p ~/Workspace/configs
-
-# Change swappiness
-su root -c 'echo "vm.swappiness=10" >> /etc/sysctl.d/100-manjaro.conf'
-
-# Enable fstrim
-sudo systemctl enable fstrim.timer
-
-# Enable xbox controller
-sudo systemctl enable xboxdrv.service
-
-# Avoid the wait bettween login attempts
-su root -c 'echo "nodelay" >> /etc/security/faillock.conf'
-
-echo "-------------------------------------------------"
-echo "Change themes"
-echo "-------------------------------------------------"
-lookandfeeltool -a org.manjaro.breath-dark.desktop

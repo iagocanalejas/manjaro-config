@@ -1,0 +1,88 @@
+- name: npm | install nodejs and npm
+  become: true
+  community.general.pacman:
+    name: ["nodejs", "npm"]
+    state: present
+  tags:
+    - install
+    - node
+
+- name: npm | npmjs prefix
+  shell: mkdir -p ~/.local/.npm-global
+  tags:
+    - install
+    - node
+
+- name: npm | npmjs global settings
+  shell: npm config set prefix '~/.local/.npm-global'
+  tags:
+    - install
+    - node
+
+- name: npmjs global settings export path in case I don't have dotfiles installed
+  shell: export PATH=~/.local/.npm-global/bin:$PATH
+  tags:
+    - install
+    - node
+    - npm-path
+
+- name: npm | install N
+  npm:
+    name: n
+    global: yes
+  tags:
+    - install
+    - node
+
+- name: npm | install version '18' of Node
+  shell: n 18
+  tags:
+    - install
+    - node
+
+- name: npm | install version 'latest' of Node
+  shell: n latest
+  tags:
+    - install
+    - node
+
+# install packages
+- name: npm | install eslint
+  npm:
+    name: eslint
+    global: yes
+  tags:
+    - install
+    - node
+
+- name: npm | install Typescript server
+  npm:
+    name: typescript-language-server
+    global: yes
+  tags:
+    - install
+    - node
+
+- name: npm | install Typescript
+  npm:
+    name: typescript
+    global: yes
+  tags:
+    - install
+    - node
+
+- name: npm | install TS-Node
+  npm:
+    name: ts-node
+    global: yes
+  tags:
+    - install
+    - node
+
+- name: npm | install Prettierd
+  npm:
+    name: prettierd
+    global: yes
+  tags:
+    - install
+    - node

@@ -1,5 +1,6 @@
 aegisub
 alacritty
+ansible
 appimagelauncher
 bat
 bitwarden
@@ -31,9 +32,11 @@ p7zip
 peek
 pnpm
 samba
+screen
 smb4k
 steam
 telegram-desktop
+tmux
 unrar
 unzip
 ventoy

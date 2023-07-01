@@ -1,0 +1,33 @@
+- name: git | personal setup email
+  git_config:
+    name: user.email
+    scope: global
+    value: "iagocanalejas@gmail.com"
+  tags:
+    - git-personal
+- name: git | personal setup name
+  git_config:
+    name: user.name
+    scope: global
+    value: "Iago Santos"
+  tags:
+    - git-personal
+
+- name: git | work setup email
+  git_config:
+    name: user.email
+    repo: ~/Workspace/work/eusend-web
+    scope: local
+    value: "iago.santos-dominguez@ext.ec.europa.eu"
+  when: "'git-work' in ansible_run_tags"
+  tags:
+    - git-work
+- name: git | work setup name
+  git_config:
+    name: user.name
+    repo: ~/Workspace/work/eusend-web
+    scope: local
+    value: "Iago Santos"
+  when: "'git-work' in ansible_run_tags"
+  tags:
+    - git-work

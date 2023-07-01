@@ -1,6 +1,6 @@
 ### CLEANING AND ADDING TO THE PATH
 set -e fish_user_paths
-set -U fish_user_paths $HOME/.bin $HOME/.cargo/bin $HOME/.local/bin $HOME/Applications /var/lib/flatpak/exports/bin/ $fish_user_paths
+set -U fish_user_paths $HOME/.bin $HOME/.local/bin $HOME/.local/.npm-global/bin $HOME/Applications /var/lib/flatpak/exports/bin/ $fish_user_paths
 
 ### EXPORT ###
 set fish_greeting # Supresses fish's intro message

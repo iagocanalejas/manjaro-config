@@ -1,0 +1,31 @@
+- name: ssh | ensure .ssh directory exists.
+  become: yes
+  file:
+    dest: "{{ dest_key | dirname }}"
+    state: directory
+    owner: "{{ lookup('env', 'USER') }}"
+    mode: 0700
+
+- name: ssh | install ssh key
+  copy:
+    src: "{{ source_key }}"
+    dest: "{{ dest_key }}"
+    owner: "{{ lookup('env', 'USER') }}"
+    mode: 0600
+
+- name: ssh | install ssh key public
+  copy:
+    src: "{{ source_key }}.pub"
+    dest: "{{ dest_key }}.pub"
+    owner: "{{ lookup('env', 'USER') }}"
+    mode: 0644
+
+- name: ssh | set authorized key took from file
+  vars:
+    key_file: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa.pub"
+  authorized_key:
+    user: "{{ lookup('env', 'USER') }}"
+    key: "{{ lookup('file', key_file) }}"
+    state: present
+  with_fileglob:
+    - "{{ lookup('env', 'HOME') }}/.ssh/*.pub"
