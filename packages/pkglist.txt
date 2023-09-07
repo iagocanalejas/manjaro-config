@@ -11,11 +11,13 @@ docker-compose
 discord
 dosfstools
 exa
+fd
 firefox-developer-edition
 fish
 fzf
 gsmartcontrol
 iperf3
+krfb
 kwallet
 kwallet-pam
 kwalletmanager
