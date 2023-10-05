@@ -1,6 +1,6 @@
 ### CLEANING AND ADDING TO THE PATH
 set -e fish_user_paths
-set -U fish_user_paths $HOME/.bin $HOME/.local/bin $HOME/.local/.npm-global/bin $HOME/Applications /var/lib/flatpak/exports/bin/ $fish_user_paths
+set -U fish_user_paths $HOME/.bin $HOME/.local/bin $HOME/Applications /var/lib/flatpak/exports/bin/ $fish_user_paths
 
 ### EXPORT ###
 set fish_greeting # Supresses fish's intro message
@@ -108,7 +108,6 @@ alias history='history | fzf'
 
 # activate current python environment
 alias activate='source venv/bin/activate.fish'
-alias n='nvim .'
 
 # navigation
 alias ..='cd ..'
@@ -117,12 +116,9 @@ alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 
-# quick-access
-alias eu-web='cd ~/Workspace/work/eusend-web/etxweb-vueApp && npm run serve'
-alias current-web='cd ~/Workspace/personal/t3-r4l && npm run dev'
-
 # vim and emacs
 alias vim='nvim'
+alias n='nvim .'
 
 # Changing "ls" to "exa"
 alias ls='exa -al --color=always --group-directories-first' # my preferred listing
@@ -132,7 +128,7 @@ alias lt='exa -aT --color=always --group-directories-first' # tree listing
 alias l.='exa -a | grep -E "^\."'
 
 # pacman and yay
-alias update='sudo pacman -Syuy && yay -Syuy --noconfirm && flatpak update'
+alias update='sudo pacman -Syuy --noconfirm && yay -Syuy --noconfirm && flatpak update'
 alias unlock='sudo rm /var/lib/pacman/db.lck' # remove pacman lock
 alias cleanup='sudo pacman -Rns (pacman -Qtdq)' # remove orphaned packages
 
@@ -191,9 +187,26 @@ alias tips="lbrynet txo spend --type=support --is_not_my_input --blocking"
 # Add asdf
 source /opt/asdf-vm/asdf.fish
 
+# quick access
+alias euw='cd ~/Workspace/work/eusend-web/etxweb-vueApp && npm run serve'
+
+
 ### RANDOM COLOR SCRIPT ###
 # Or install it from the Arch User Repository: shell-color-scripts
 colorscript random
 
 starship init fish | source
 zoxide init fish | source
+
+# pnpm
+set -gx PNPM_HOME "/home/canalejas/.local/share/pnpm"
+if not string match -q -- $PNPM_HOME $PATH
+    set -gx PATH "$PNPM_HOME" $PATH
+end
+# pnpm end
+
+# launch tmux on fish start
+if status is-interactive
+and not set -q TMUX
+    exec tmux
+end
