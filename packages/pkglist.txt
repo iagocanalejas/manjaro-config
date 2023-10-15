@@ -37,7 +37,6 @@ samba
 screen
 smb4k
 steam
-telegram-desktop
 tmux
 unrar
 unzip

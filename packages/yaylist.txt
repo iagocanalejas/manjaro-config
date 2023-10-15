@@ -3,7 +3,7 @@ autofirma-bin
 brave-bin
 dropbox
 dxvk-bin
-franz
+ferdium-bin
 google-chrome
 jetbrains-toolbox
 nerd-fonts-fira-code

@@ -119,6 +119,7 @@ alias .5='cd ../../../../..'
 # vim and emacs
 alias vim='nvim'
 alias n='nvim .'
+alias t='tmux'
 
 # Changing "ls" to "exa"
 alias ls='exa -al --color=always --group-directories-first' # my preferred listing
@@ -204,9 +205,3 @@ if not string match -q -- $PNPM_HOME $PATH
     set -gx PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
-
-# launch tmux on fish start
-if status is-interactive
-and not set -q TMUX
-    exec tmux
-end
