@@ -1,5 +1,5 @@
 - name: ssh | ensure .ssh directory exists.
-  become: yes
+  become: true
   file:
     dest: "{{ dest_key | dirname }}"
     state: directory

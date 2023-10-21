@@ -2,6 +2,12 @@
 set -e fish_user_paths
 set -U fish_user_paths $HOME/.bin $HOME/.local/bin $HOME/Applications /var/lib/flatpak/exports/bin/ $fish_user_paths
 
+# Rust paths
+set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
+
+# Golang paths
+set -U fish_user_paths /usr/local/go/bin  $fish_user_paths
+
 ### EXPORT ###
 set fish_greeting # Supresses fish's intro message
 set TERM xterm-256color # Sets the terminal type
@@ -95,6 +101,19 @@ function backup --argument filename
     cp $filename $filename.bak
 end
 
+# Activate environment if CDing into a python project
+function cd
+    if test -d ./venv
+        deactivate $argv
+    end
+
+    builtin cd $argv
+
+    if test -d ./venv
+        . ./venv/bin/activate.fish
+    end
+end
+
 ### END OF FUNCTIONS ###
 
 ### ALIASES ###
@@ -173,24 +192,17 @@ alias newtag='git tag -a'
 # get error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
 
-# switch between shells
-# I do not recommend switching default SHELL from bash.
-alias tobash="sudo chsh $USER -s /bin/bash && echo 'Now log out.'"
-alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
-alias tofish="sudo chsh $USER -s /bin/fish && echo 'Now log out.'"
-
-# the terminal rickroll
-alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash'
-
 # Unlock LBRY tips
 alias tips="lbrynet txo spend --type=support --is_not_my_input --blocking"
 
-# Add asdf
-source /opt/asdf-vm/asdf.fish
-
-# quick access
-alias euw='cd ~/Workspace/work/eusend-web/etxweb-vueApp && npm run serve'
-
+# quick-access
+alias current-web='cd ~/Workspace/personal/t3-r4l && npm run dev'
+alias euw='cd ~/Workspace/work/eusend-web/etxweb-vueApp && nvm use && npm run serve'
+function eud
+    cd ~/Workspace/work/eusend-web
+    ./gradlew clean buildAll -PtargetEnv=docker-weblogic-oracle --stacktrace --warning-mode all
+    yes | cp ./etxweb-rest/build/libs/eusend#web.war ./Docker/weblogic-oracle/weblogic/base_domain/autodeploy
+end
 
 ### RANDOM COLOR SCRIPT ###
 # Or install it from the Arch User Repository: shell-color-scripts
@@ -198,6 +210,7 @@ colorscript random
 
 starship init fish | source
 zoxide init fish | source
+direnv hook fish | source
 
 # pnpm
 set -gx PNPM_HOME "/home/canalejas/.local/share/pnpm"
@@ -205,3 +218,10 @@ if not string match -q -- $PNPM_HOME $PATH
     set -gx PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+if not string match -q -- $BUN_INSTALL $PATH
+    set -gx PATH "$BUN_INSTALL/bin" $PATH
+end
+# bun end

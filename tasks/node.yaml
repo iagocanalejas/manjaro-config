@@ -26,6 +26,7 @@
     - node
     - npm-path
 
+# TODO: this is not what i thought, change to NVM
 - name: npm | install N
   npm:
     name: n

@@ -47,6 +47,12 @@ echo "-------------------------------------------------"
 rsync -a .config/ "$HOME/.config/"
 
 echo "-------------------------------------------------"
+echo "Install fisher & fisher plugins"
+echo "-------------------------------------------------"
+curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+fisher install jorgebucaran/nvm.fish
+
+echo "-------------------------------------------------"
 echo "Change some directories permissions"
 echo "-------------------------------------------------"
 sudo mkdir -p /usr/local/n /usr/local/bin /usr/local/lib /usr/local/include /usr/local/share
