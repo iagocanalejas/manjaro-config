@@ -35,6 +35,7 @@ partitionmanager
 p7zip
 peek
 pnpm
+python-virtualenv
 samba
 screen
 smb4k
