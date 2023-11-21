@@ -177,7 +177,7 @@ alias lt='exa -aT --color=always --group-directories-first' # tree listing
 alias l.='exa -a | grep -E "^\."'
 
 # pacman and yay
-alias update='sudo pacman -Syuy --noconfirm && yay -Syuy --noconfirm && flatpak update'
+alias update='sudo pacman -Syuuy --noconfirm && yay -Syuuy --noconfirm && flatpak update'
 alias unlock='sudo rm /var/lib/pacman/db.lck' # remove pacman lock
 alias cleanup='sudo pacman -Rns (pacman -Qtdq)' # remove orphaned packages
 

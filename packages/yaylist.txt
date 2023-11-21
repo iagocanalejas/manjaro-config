@@ -21,4 +21,5 @@ ttf-droid
 ttf-hack
 ttf-meslo
 ttf-roboto
+udev-usb-sync
 xboxdrv
