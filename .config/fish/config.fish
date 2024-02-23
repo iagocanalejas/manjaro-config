@@ -6,7 +6,7 @@ set -U fish_user_paths $HOME/.bin $HOME/.local/bin $HOME/Applications /var/lib/f
 set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
 
 # Golang paths
-set -U fish_user_paths /usr/local/go/bin  $fish_user_paths
+set -U fish_user_paths /usr/local/go/bin $HOME/go/bin  $fish_user_paths
 
 ### EXPORT ###
 set fish_greeting # Supresses fish's intro message
@@ -235,7 +235,9 @@ end
 
 ### RANDOM COLOR SCRIPT ###
 # Or install it from the Arch User Repository: shell-color-scripts
-colorscript random
+if not set -q VIMRUNTIME && not set -q TMUX
+	colorscript random
+end
 
 starship init fish | source
 zoxide init fish | source

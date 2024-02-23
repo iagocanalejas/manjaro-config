@@ -18,7 +18,9 @@ fish
 fzf
 go
 gsmartcontrol
+hdparm
 iperf3
+jq
 krfb
 kwallet
 kwallet-pam
@@ -31,11 +33,14 @@ mkvtoolnix-cli
 mkvtoolnix-gui
 neovim
 net-tools
+obsidian
 partitionmanager
 p7zip
 peek
 pnpm
+python-pynvim
 python-virtualenv
+ruff
 samba
 screen
 smb4k
