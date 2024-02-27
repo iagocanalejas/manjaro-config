@@ -11,7 +11,7 @@ direnv
 docker
 docker-compose
 dosfstools
-exa
+eza
 fd
 firefox-developer-edition
 fish

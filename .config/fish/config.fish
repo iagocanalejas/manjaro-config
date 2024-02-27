@@ -147,6 +147,9 @@ end
 ### ALIASES ###
 alias clear='echo -en "\x1b[2J\x1b[1;1H" ; echo; echo; seq 1 (tput cols) | sort -R | spark | lolcat; echo; echo'
 
+# replace cat with bat
+alias cat='bat'
+
 # root privileges
 alias doas="doas --"
 
@@ -170,11 +173,11 @@ alias t='tmux'
 alias nvenv='virtualenv --python="/usr/bin/python3.12" venv && activate'
 
 # Changing "ls" to "exa"
-alias ls='exa -al --color=always --group-directories-first' # my preferred listing
-alias la='exa -a --color=always --group-directories-first' # all files and dirs
-alias ll='exa -l --color=always --group-directories-first' # long format
-alias lt='exa -aT --color=always --group-directories-first' # tree listing
-alias l.='exa -a | grep -E "^\."'
+alias ls='eza -al --color=always --group-directories-first' # my preferred listing
+alias la='eza -a --color=always --group-directories-first' # all files and dirs
+alias ll='eza -l --color=always --group-directories-first' # long format
+alias lt='eza -aT --color=always --group-directories-first' # tree listing
+alias l.='eza -a | grep -E "^\."'
 
 # pacman and yay
 alias update='sudo pacman -Syuuy --noconfirm && yay -Syuuy --noconfirm && flatpak update'
