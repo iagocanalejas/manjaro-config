@@ -136,6 +136,19 @@ function deactivate  -d "Exit virtual environment and return to normal shell env
     end
 end
 
+function python_tests
+	set test_arg $argv[1]
+    if test -f manage.py
+		if [ -z "$test_arg" ]
+			python manage.py test --pattern="*test.py"
+		else
+			python manage.py test $test_arg
+		end
+    else
+        python -m pytest -s $test_arg
+    end
+end
+
 # Function for creating a backup file
 # ex: backup file.txt
 # result: copies file as file.txt.bak
@@ -159,6 +172,10 @@ alias history='history | fzf'
 # activate current python environment
 alias activate='source venv/bin/activate.fish'
 
+# python untils
+alias pytest='python_tests'
+alias nvenv='virtualenv --python="/usr/bin/python3.12" venv && activate'
+
 # navigation
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -170,7 +187,6 @@ alias .5='cd ../../../../..'
 alias vim='nvim'
 alias n='nvim .'
 alias t='tmux'
-alias nvenv='virtualenv --python="/usr/bin/python3.12" venv && activate'
 
 # Changing "ls" to "exa"
 alias ls='eza -al --color=always --group-directories-first' # my preferred listing
