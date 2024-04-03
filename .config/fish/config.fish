@@ -226,6 +226,8 @@ alias pscpu='ps auxf | sort -nr -k 3'
 # git
 alias addup='git add -u'
 alias addall='git add .'
+alias amend='git commit --amend'
+alias amenddate='git commit --amend --no-edit --date "$(date)"'
 alias branch='git branch'
 alias checkout='git checkout'
 alias clone='git clone'
