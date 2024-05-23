@@ -16,6 +16,7 @@ fd
 firefox-developer-edition
 fish
 fzf
+gimp
 go
 gsmartcontrol
 hdparm
@@ -46,6 +47,7 @@ screen
 smb4k
 steam
 tmux
+ttf-jetbrains-mono-nerd
 unrar
 unzip
 ventoy

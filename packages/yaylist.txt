@@ -1,4 +1,3 @@
-asdf-vm
 autofirma-bin
 brave-bin
 dropbox
@@ -9,6 +8,7 @@ jetbrains-toolbox
 nerd-fonts-fira-code
 ocs-url
 onlyoffice-bin
+prismlauncher
 protonvpn
 protonvpn-cli
 protonvpn-gui
