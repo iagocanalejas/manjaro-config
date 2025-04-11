@@ -15,6 +15,7 @@ set XDG_CONFIG_HOME /home/canalejas/.config
 
 ### SET MANPAGER
 ### "bat" as manpager
+set -x MANROFFOPT "-c"
 set -x MANPAGER "sh -c 'col -bx | bat -l man -p'"
 
 ### AUTOCOMPLETE AND HIGHLIGHT COLORS ###
@@ -94,19 +95,6 @@ function commits
     git log --author="$argv" --format=format:%ad --date=short | uniq -c | awk '{print $1}' | spark | lolcat
 end
 
-# Activate environment if CDing into a python project
-function cd
-    if test -d ./venv
-        deactivate $argv
-    end
-
-    builtin cd $argv
-
-    if test -d ./venv
-        . ./venv/bin/activate.fish
-    end
-end
-
 function deactivate  -d "Exit virtual environment and return to normal shell environment"
     # reset old environment variables
     if test -n "$_OLD_VIRTUAL_PATH"
@@ -174,7 +162,7 @@ alias activate='source venv/bin/activate.fish'
 
 # python untils
 alias pytest='python_tests'
-alias nvenv='virtualenv --python="/usr/bin/python3.12" venv && activate'
+alias nvenv='virtualenv --python="/usr/bin/python3.13" venv && activate'
 
 # navigation
 alias ..='cd ..'
@@ -187,6 +175,9 @@ alias .5='cd ../../../../..'
 alias vim='nvim'
 alias n='nvim .'
 alias t='tmux'
+
+# utils
+alias pi.='pip install .'
 
 # Changing "ls" to "exa"
 alias ls='eza -al --color=always --group-directories-first' # my preferred listing
@@ -247,7 +238,7 @@ alias tips="lbrynet txo spend --type=support --is_not_my_input --blocking"
 
 # quick-access
 alias current-web='cd ~/Workspace/personal/t3-r4l && npm run dev'
-alias euw='cd ~/Workspace/work/eusend-web/etxweb-vueApp && nvm use && npm run serve'
+alias euw='cd ~/Workspace/work/eusend-web/etxweb-vueApp && npm run dev'
 function eud
     cd ~/Workspace/work/eusend-web
     ./gradlew clean buildAll -PtargetEnv=docker-weblogic-oracle --stacktrace --warning-mode all
@@ -264,9 +255,19 @@ starship init fish | source
 zoxide init fish | source
 direnv hook fish | source
 
+source ~/.config/fish/functions/venv_auto_use.fish
+source ~/.config/fish/functions/nvm_auto_use.fish
+
 # pnpm
 set -gx PNPM_HOME "/home/canalejas/.local/share/pnpm"
 if not string match -q -- $PNPM_HOME $PATH
     set -gx PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+if not string match -q -- $BUN_INSTALL $PATH
+    set -gx PATH "$BUN_INSTALL/bin" $PATH
+end
+# bun end
